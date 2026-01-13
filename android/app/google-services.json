@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "453318440850",
+    "project_id": "rewoven-f8963",
+    "storage_bucket": "rewoven-f8963.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:453318440850:android:b6d8d2e34f6379e67e334b",
+        "android_client_info": {
+          "package_name": "com.example.rewoven"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx4dV3d3ibliItyy2Ml1GmR7USzgxL4Q4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

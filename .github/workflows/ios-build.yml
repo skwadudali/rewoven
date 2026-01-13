@@ -1,0 +1,93 @@
+name: iOS Build
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+    
+    - name: Install dependencies
+      run: flutter pub get
+    
+    - name: Analyze code
+      run: flutter analyze
+    
+    - name: Run tests
+      run: flutter test
+    
+    - name: Build iOS (no code sign)
+      run: flutter build ios --release --no-codesign
+    
+    - name: Upload IPA
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-build
+        path: build/ios/iphoneos/Runner.app
+        retention-days: 7
+
+  # Optional: Build signed IPA (requires Apple Developer account)
+  build-ios-signed:
+    runs-on: macos-latest
+    if: github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.24.0'
+        channel: 'stable'
+    
+    - name: Install dependencies
+      run: flutter pub get
+    
+    # You'll need to add these secrets in GitHub repository settings:
+    # - APPLE_CERT_P12_BASE64: Your signing certificate (base64 encoded)
+    # - APPLE_CERT_PASSWORD: Certificate password
+    # - PROVISIONING_PROFILE_BASE64: Provisioning profile (base64 encoded)
+    # - APPLE_TEAM_ID: Your Apple Developer Team ID
+    
+    - name: Import Code-Signing Certificates
+      uses: apple-actions/import-codesign-certs@v2
+      with:
+        p12-file-base64: ${{ secrets.APPLE_CERT_P12_BASE64 }}
+        p12-password: ${{ secrets.APPLE_CERT_PASSWORD }}
+    
+    - name: Install Provisioning Profile
+      run: |
+        mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+        echo "${{ secrets.PROVISIONING_PROFILE_BASE64 }}" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/profile.mobileprovision
+    
+    - name: Build iOS IPA
+      run: |
+        flutter build ipa --release --export-options-plist=ios/ExportOptions.plist
+    
+    - name: Upload IPA
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-signed-ipa
+        path: build/ios/ipa/*.ipa
+        retention-days: 30

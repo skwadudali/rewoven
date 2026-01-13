@@ -1,0 +1,60 @@
+name: rewoven
+description: A gamified sustainability education app for tackling textile waste
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # UI & Design
+  cupertino_icons: ^1.0.2
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
+  
+  # State Management
+  provider: ^6.1.1
+  
+  # Database
+  sqflite: ^2.3.0
+  path_provider: ^2.1.1
+  path: ^1.8.3
+  
+  # Firebase
+  firebase_core: ^2.24.2
+  cloud_firestore: ^4.13.6
+  
+  # Charts & Visualization
+  fl_chart: ^0.65.0
+  
+  # Storage
+  shared_preferences: ^2.2.2
+  
+  # Date & Time
+  intl: ^0.18.1
+  
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/badges/
+flutter_launcher_icons:
+  image_path: "assets/icons/logo.png"
+  android: true
+  ios: true
+  web: true
+  windows: true
+  macos: true
