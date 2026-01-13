@@ -53,8 +53,8 @@ class AuthProvider extends ChangeNotifier {
           await prefs.setInt('student_id', student.id!);
         }
 
-        final externalId = student.studentId ?? student.id?.toString();
-        if (externalId != null) {
+        final externalId = student.studentId.isNotEmpty ? student.studentId : student.id?.toString() ?? '';
+        if (externalId.isNotEmpty) {
           // Sync user to Firestore (fire-and-forget but with logging)
           unawaited(
             FirestoreService.saveUser(externalId, student.toMap()).catchError(
@@ -93,8 +93,8 @@ class AuthProvider extends ChangeNotifier {
         final prefs = await SharedPreferences.getInstance();
         await prefs.setInt('student_id', id);
 
-        final externalId = newStudent.studentId ?? newStudent.id?.toString();
-        if (externalId != null) {
+        final externalId = newStudent.studentId.isNotEmpty ? newStudent.studentId : newStudent.id?.toString() ?? '';
+        if (externalId.isNotEmpty) {
           // Sync user to Firestore
           try {
             debugPrint('AuthProvider: Attempting to save user $externalId to Firestore');

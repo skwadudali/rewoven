@@ -42,12 +42,6 @@ class RewovenApp extends StatelessWidget {
             secondary: const Color(0xFF66BB6A),
             tertiary: const Color(0xFF81C784),
           ),
-          cardTheme: const CardThemeData(
-            elevation: 2,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(16)),
-            ),
-          ),
           appBarTheme: const AppBarTheme(
             centerTitle: true,
             elevation: 0,

@@ -165,11 +165,11 @@ class _CategoryDetailScreenState extends State<CategoryDetailScreen> with Single
                       const SizedBox(height: 4),
                       Text(
                         '8 questions',
-                        style: TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 14),
+                        style: TextStyle(color: Colors.white.withValues(alpha: 0.8), fontSize: 14),
                       ),
                     ],
                   ),
-                  Icon(Icons.arrow_forward, color: Colors.white.withOpacity(0.8)),
+                  Icon(Icons.arrow_forward, color: Colors.white.withValues(alpha: 0.8)),
                 ],
               ),
             ),
